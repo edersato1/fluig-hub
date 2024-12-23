@@ -1,0 +1,82 @@
+/* Globais */
+/* .fluig-style-guide .row:nth-child(1n+2) {
+    margin-top: 1em;
+} */
+
+/* Gerais */
+
+#descricao {
+    text-transform: uppercase;
+}
+
+#anexosArea > .panel-body > .row > h4 {
+    text-align: center;
+    text-decoration: underline;
+    letter-spacing: -0.5px;
+}
+
+.anexoLinha {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 0 2rem;
+    margin: 0.8rem 0;
+}
+
+@media (min-width: 320px) and (max-width: 520px) {
+    .anexoLinha {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 1rem;
+    }
+}
+
+.attachObs {
+    display: flex;
+    align-items: center;
+    margin: 0.8rem 0;
+}
+
+@media (min-width: 320px) and (max-width: 520px) {
+    .attachObs {
+        flex-direction: column;
+        align-items: inherit;
+    }
+}
+
+.aprovationArea {
+    display: flex;
+    justify-content: space-around;
+}
+
+.motivoAlteracao {
+    color: firebrick !important;
+    letter-spacing: -0.5px;
+    transition: 0.5s ease-in;
+    
+}
+
+#setorEspecifico {
+    text-transform: capitalize;
+}
+
+.motivoAlteracao:hover {
+    text-decoration: underline;
+    transition: 0.5s ease-out;
+}
+
+#motivo::placeholder {
+    color: #b9b9b9;
+}
+
+/* Validadores */
+
+.has-error{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    display: inline-block;
+    border: 1px red solid !important;
+    color: black !important;
+}

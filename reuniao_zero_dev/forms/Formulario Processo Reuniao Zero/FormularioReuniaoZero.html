@@ -1,0 +1,1233 @@
+<html>
+
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css" />
+	<link rel="stylesheet" href="StyleReuniaoZero.css">
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script src="FuncoesReunioesZero.js"></script>
+	<script src="GeraPdfProcesso.js"></script>
+	<script src="ScriptReuniaoZero.js"></script>
+	<script src="/webdesk/vcXMLRPC.js"></script>
+	<script src="jsPDF.min.js"></script>
+	<script src="jquery.mask.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.2.7/dist/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+	<div class="fluig-style-guide" id="content">
+		<form name="form" role="form">
+			<!-- Etapa 1 -->
+
+			<div id="quadroTecnico">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">Quadro Técnico</h2>
+					</div>
+					<div class="panel-body" id="quadTec">
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="coordenador" id="coordenadorLabel">Coordenador: </label>
+									<input type="zoom" class="form-control inputInicial" id="coordenador" name="coordenador" data-zoom="{
+										'displayKey':'colleagueName',
+										'datasetId':'colleague',
+										'maximumSelectionLength':'1',
+										'placeholder':'Coordenador',
+										'filterValues':'active,true',
+										'fields':[
+											{
+												'field':'colleagueName',
+												'label':'Nome',
+												'standard':'true'
+											},
+											{
+												'field':'mail',
+												'visible':'false'
+											}
+										]
+									}">
+
+									<input type="email" autocomplete="off" style="margin: 0.5rem 0" class="form-control inputInicial"
+									placeholder="Email do Coordenador" name="emailCoordenador" id="emailCoordenador">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="gerenteContrato">Gerente de Contrato:</label>
+									<input type="zoom" class="form-control inputInicial" id="gerenteContrato" name="gerenteContrato" data-zoom="{
+										'displayKey':'colleagueName',
+										'datasetId':'colleague',
+										'maximumSelectionLength':'1',
+										'placeholder':'Gerente de Contrato',
+										'filterValues':'active,true',
+										'fields':[
+											{
+												'field':'colleagueName',
+												'label':'Nome',
+												'standard':'true'
+											},
+											{
+												'field':'mail',
+												'visible':'false'
+											},
+											{
+												'field':'login',
+												'visible':'false'
+											}
+										]
+									}">
+
+									<input type="email" autocomplete="off" style="margin: 0.5rem 0" class="form-control inputInicial"
+									placeholder="Email do Gerente" name="emailGerente" id="emailGerente">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="encarregadoAdm">Encarregado Administrativo:</label>
+									<input type="zoom" class="form-control inputInicial" id="encarregadoAdm" name="encarregadoAdm" data-zoom="{
+										'displayKey':'colleagueName',
+										'datasetId':'colleague',
+										'maximumSelectionLength':'1',
+										'placeholder':'Encarregado',
+										'filterValues':'active,true',
+										'fields':[
+											{
+												'field':'colleagueName',
+												'label':'Nome',
+												'standard':'true'
+											},
+											{
+												'field':'mail',
+												'visible':'false'
+											}
+										]
+									}">
+
+									<input type="email" autocomplete="off" style="margin: 0.5rem 0" class="form-control inputInicial"
+									placeholder="Email do Encarregado" name="emailEncarregado" id="emailEncarregado">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="engenheiroSST">Engenheiro de Seg. do Trabalho:</label>
+									<input type="zoom" class="form-control inputInicial" id="engenheiroSST" name="engenheiroSST" data-zoom="{
+										'displayKey':'colleagueName',
+										'datasetId':'colleague',
+										'maximumSelectionLength':'1',
+										'placeholder':'Engenheiro de Segurança',
+										'filterValues':'active,true',
+										'fields':[
+											{
+												'field':'colleagueName',
+												'label':'Nome',
+												'standard':'true'
+											},
+											{
+												'field':'mail',
+												'visible':'false'
+											}
+										]
+									}">
+
+									<input type="email" autocomplete="off" style="margin: 0.5rem 0" class="form-control inputInicial"
+									placeholder="Email do Engenheiro" name="emailEngenheiro" id="emailEngenheiro">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="apresentaObra">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="collapse-icon up panel-title" data-toggle="collapse" data-parent="#apresentaObra"
+							href="#tableApresentaObra">
+							Apresentação da Obra
+						</h2>
+					</div>
+					<div class="panel-body panel-collapse collapse in" id="tableApresentaObra">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="coligada">Coligada</label>
+								<select name="coligada" id="coligada" class="form-control">
+									<option value="castilho">Castilho Engenharia</option>
+									<option value="dromos">Dromos Infraestrutura</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<label for="nomeObra">Nome da Obra: </label>
+								<input name="nomeObra" id="nomeObra" type="text" placeholder="Obra"
+									class="form-control inputInicial">
+							</div>
+							<div class="col-md-3">
+								<label for="regionalObra">Regional: </label>
+								<select name="regionalObra" id="regionalObra" class="form-control inputInicial"
+									placeholder="Regional">
+									<option value="" disabled></option>
+								</select>
+								<span id="spanSelectRegional" class="regionalNome"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<label for="clienteObra">Cliente: </label>
+								<input name="clienteObra" id="clienteObra" type="text" placeholder="Cliente"
+									class="form-control inputInicial">
+							</div>
+							<div class="col-md-3">
+								<label for="numeroContrato">Nº do Contrato: </label>
+								<input name="numeroContrato" id="numeroContrato" type="text" placeholder="Nº Contrato"
+									class="form-control">
+							</div>
+							<div class="col-md-4">
+								<label for="valorContrato">Valor Total Contrato: </label>
+								<input name="valorContrato" id="valorContrato" placeholder="Valor Contrato" type="text"
+									class="form-control inputInicial">
+							</div>
+							<div class="col-md-2">
+								<label for="baseData">Data Base: </label>
+								<input name="baseData" id="baseData" type="text" placeholder="Data Base"
+									class="form-control inputInicial">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<label for="estimativaResultado">Estimativa de Resultado: </label>
+								<input name="estimativaResultado" id="estimativaResultado" placeholder="Estimativa %"
+									type="text" class="form-control">
+							</div>
+							<div class="col-md-9">
+								<label for="objetoContrato">Objeto do Contrato: </label>
+								<input name="objetoContrato" type="text" placeholder="Objeto Contrato"
+									id="objetoContrato" class="form-control inputInicial">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<label for="centroCusto">Centro de Custo: </label>
+								<input name="centroCusto" id="centroCusto" type="text" placeholder="Centro de Custo"
+									class="form-control" readonly>
+							</div>
+							<div class="col-md-4">
+								<label for="obraCNO">CNO da Obra: </label>
+								<input name="obraCNO" id="obraCNO" type="text" placeholder="Nº CNO"
+									class="form-control">
+							</div>
+							<div class="col-md-3">
+								<label for="issPrevia">ISS Previsto BDI: </label>
+								<input name="issPrevia" id="issPrevia" type="text" placeholder="ISS %"
+									class="form-control inputInicial">
+							</div>
+							<div class="col-md-3">
+								<label for="beneficioFiscal">Benefícios Fiscais Previstos: </label>
+								<input name="beneficioFiscal" id="beneficioFiscal" type="text" placeholder="Benefícios"
+									class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<label for="prazoExecucao">Prazo de Execução(dias)</label>
+								<input type="number" id="prazoExecucao" name="prazoExecucao" placeholder="Nº de dias" class="form-control">
+							</div>
+							<div class="col-md-3">
+								<label for="inicioObra">Inicio Previsto da Obra: </label>
+								<input name="inicioObra" id="inicioObra" type="text" placeholder="Inicio Obra"
+									class="form-control inputInicial">
+							</div>
+							<div class="col-md-3">
+								<label for="fimObra">Término Previsto da Obra: </label>
+								<input name="fimObra" id="fimObra" type="text" placeholder="Fim Obra"
+									class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<label for="consorcioSwitch">Consórcio: </label><br>
+								<input type="checkbox" data-on-color="success" data-off-color="danger"
+									data-on-text="SIM" data-off-text="NÃO" size="small" name="consorcioSwitch"
+									id="consorcioSwitch">
+							</div>
+							<div class="col-md-6">
+								<label for="nomeConsorcio" class="inputSlider">Nome do Consórcio: </label>
+								<input type="text" id="nomeConsorcio" name="nomeConsorcio"
+									placeholder="Nome do Consórcio" class="form-control inputSlider">
+							</div>
+							<div class="col-md-3">
+								<label for="percentCastilho" class="inputSlider">Porcentagem da Castilho: </label>
+								<input type="text" name="percentCastilho" id="percentCastilho" placeholder="Porcentagem"
+									class="form-control inputSlider">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Etapas dos Setores -->
+			<!-- Compras -->
+
+			<div id="suprimentos">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="collapse-icon up panel-title" data-toggle="collapse" data-parent="#apresentaObra"
+							href="#tableSuprimentos">
+							Suprimentos/Compras
+						</h2>
+					</div>
+				</div>
+				<div class="panel-body panel-collapse collapse in" id="tableSuprimentos">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Insumos de Obra (Selecione os produtos conforme a realidade da Obra)
+							</h4>
+						</div>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="insumosObra">
+								<thead>
+									<tr>
+										<th>Produto</th>
+										<th>Volume Estimado</th>
+										<th>Início de Consumo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkCimento">
+											<label>Cimento</label>
+										</td>
+										<td><input type="text" name="volumeInfo1" id="volumeInfo1"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo1" id="inicioConsumo1"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao1" id="observacao1"
+												class="observInfo form-control" readonly></td>
+									</tr>
+										<td>
+											<input type="checkbox" name="checkOleo">
+											<label>Óleo de Queima</label>
+										</td>
+										<td><input type="text" name="volumeInfo2" id="volumeInfo2"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo2" id="inicioConsumo2"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao2" id="observacao2"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkUsinagem">
+											<label>Serviço de Usinagem</label>
+										</td>
+										<td><input type="text" name="volumeInfo3" id="volumeInfo3"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo3" id="inicioConsumo3"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao3" id="observacao3"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkMadeira">
+											<label>Madeira</label>
+										</td>
+										<td><input type="text" name="volumeInfo4" id="volumeInfo4"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo4" id="inicioConsumo4"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao4" id="observacao4"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkCal">
+											<label>Cal</label>
+										</td>
+										<td><input type="text" name="volumeInfo5" id="volumeInfo5"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo5" id="inicioConsumo5"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao5" id="observacao5"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkConcreto">
+											<label>Concreto Usinado</label>
+										</td>
+										<td><input type="text" name="volumeInfo6" id="volumeInfo6"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo6" id="inicioConsumo6"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao6" id="observacao6"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkTuboConcreto">
+											<label>Tubo de Concreto</label>
+										</td>
+										<td><input type="text" name="volumeInfo7" id="volumeInfo7"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo7" id="inicioConsumo7"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao7" id="observacao7"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkTuboPVC">
+											<label>Tubo de PEAD e PVC</label>
+										</td>
+										<td><input type="text" name="volumeInfo8" id="volumeInfo8"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo8" id="inicioConsumo8"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao8" id="observacao8"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkGeossintetico">
+											<label>Geossintético</label>
+										</td>
+										<td><input type="text" name="volumeInfo9" id="volumeInfo9"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo9" id="inicioConsumo9"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao9" id="observacao9"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkDefensa">
+											<label>Defensa Metálica e Pórtico</label>
+										</td>
+										<td><input type="text" name="volumeInfo10" id="volumeInfo10"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo10" id="inicioConsumo10"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao10" id="observacao10"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkSinalizacao">
+											<label>Sinalização Viária</label>
+										</td>
+										<td><input type="text" name="volumeInfo11" id="volumeInfo11"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo11" id="inicioConsumo11"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao11" id="observacao11"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkUniforme">
+											<label>Uniforme</label>
+										</td>
+										<td><input type="text" name="volumeInfo12" id="volumeInfo12"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo12" id="inicioConsumo12"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao12" id="observacao12"
+												class="observInfo form-control" readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkMotosserra">
+											<label>Motoserra</label>
+										</td>
+										<td><input type="text" name="volumeInfo13" id="volumeInfo13"
+												class="volumeInfo form-control" readonly></td>
+										<td><input type="text" name="inicioConsumo13" id="inicioConsumo13"
+												class="consumoInfo form-control" readonly></td>
+										<td><input type="text" name="observacao13" id="observacao13"
+												class="observInfo form-control" readonly></td>
+									</tr>
+								</tbody>
+							</table>
+							<button class="btn btn-primary" id="saveButton">Salvar</button>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">Insumos Específicos</h4>
+						</div>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="betuminosoInsumo">
+								<thead>
+									<tr>
+										<th>Betuminoso</th>
+										<th>Volume Estimado</th>
+										<th>Inicio do Consumo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyBetuminoso"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonBetuminoso" class="btn btn-primary">Salvar</button>
+								<button id="adicionaBetuminoso" class="btn btn-primary">Novo Item</button>
+							</div>
+						</div>
+						<hr>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="acoInsumo">
+								<thead>
+									<tr>
+										<th>Aço</th>
+										<th>Volume Estimado</th>
+										<th>Inicio do Consumo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyAco"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonAco" class="btn btn-primary">Salvar</button>
+								<button id="adicionaAco" class="btn btn-primary">Novo Item</button>
+							</div>
+						</div>
+						<hr>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="dieselInsumo">
+								<thead>
+									<tr>
+										<th>Diesel</th>
+										<th>Volume Estimado</th>
+										<th>Inicio do Consumo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyDiesel"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonDiesel" class="btn btn-primary">Salvar</button>
+								<button id="adicionaDiesel" class="btn btn-primary">Novo Item</button>
+							</div>
+						</div>
+						<hr>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="agregadoInsumo">
+								<thead>
+									<tr>
+										<th>Agregado</th>
+										<th>Volume Estimado</th>
+										<th>Inicio do Consumo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyAgregado"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonAgregado" class="btn btn-primary">Salvar</button>
+								<button id="adicionaAgregado" class="btn btn-primary">Novo Item</button>
+							</div>
+						</div>
+						<hr>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="epiInsumo">
+								<thead>
+									<tr>
+										<th>EPI</th>
+										<th>Volume Estimado</th>
+										<th>Inicio do Consumo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyEpi"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonEpi" class="btn btn-primary">Salvar</button>
+								<button id="adicionaEpi" class="btn btn-primary">Novo Item</button>
+							</div>
+						</div>
+						<hr>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="epcInsumo">
+								<thead>
+									<tr>
+										<th>EPC</th>
+										<th>Volume Estimado</th>
+										<th>Inicio do Consumo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyEpc"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonEpc" class="btn btn-primary">Salvar</button>
+								<button id="adicionaEpc" class="btn btn-primary">Novo Item</button>
+							</div>
+						</div>
+						<hr>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="laboratorioInsumo">
+								<thead>
+									<tr>
+										<th>Equipamento de Laboratório</th>
+										<th>Volume Estimado</th>
+										<th>Inicio do Consumo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyLaboratorio"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonLaboratorio" class="btn btn-primary">Salvar</button>
+								<button id="adicionaLaboratorio" class="btn btn-primary">Novo Item</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Veículos
+							</h4>
+						</div>
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="veiculosObra">
+								<thead>
+									<tr>
+										<th>Veículo</th>
+										<th>Quantidade</th>
+										<th>Modelo</th>
+										<th>Observação</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyVeiculos"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonVeiculo" class="btn btn-primary">Salvar</button>
+								<button id="adicionaVeiculo" class="btn btn-primary">Novo Veículo</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Controladoria -->
+
+			<div id="controladoria">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title collapse-icon up" data-toggle="collapse" href="#tableControladoria"
+							aria-expanded="true">
+							Controladoria
+						</h2>
+					</div>
+					<div id="tableControladoria" class="collapse in">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="CCusto" for="CCusto">Centro de Custo</label>
+									<input type="text" name="CCusto" id="CCusto" class="form-control"
+										placeholder="CCusto">
+								</div>
+								<div class="col-md-6">
+									<label for="localEstoque" for="localEstoque">Local de estoque</label>
+									<input type="text" name="localEstoque" id="localEstoque" class="form-control"
+										placeholder="Local Estoque">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Contabilidade -->
+
+			<div id="contabilidade">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">
+							<a class="collapse-icon up" data-toggle="collapse" href="#tableContabilidade">
+								Contabilidade
+							</a>
+						</h2>
+					</div>
+					<div id="tableContabilidade" class="collapse in">
+						<div class="panel-body table-responsive">
+							<table class="table table-striped" id="ContabilTable">
+								<thead>
+									<tr>
+										<th>Municipios</th>
+										<th>CNPJ</th>
+										<th>Extensão %</th>
+										<th>Alíquota ISS</th>
+										<th>Dedução Material Permitida</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyContabilidade"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonContabilidade" class="btn btn-primary">Salvar</button>
+								<button id="adicionaContabilidade" class="btn btn-primary">Novo Item</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Segurança de Trabalho -->
+
+			<div id="segurancaTrabalho">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">
+							<a class="collapse-icon up" data-toggle="collapse" href="#tableSegurancaTrabalho">
+								Segurança do Trabalho
+							</a>
+						</h2>
+					</div>
+					<div id="tableSegurancaTrabalho" class="collapse in">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="enderecoObra">Endereço da Obra: </label>
+									<input name="enderecoObra" type="text" placeholder="Endereço"
+										class="form-control inputSST">
+								</div>
+								<div class="col-md-3">
+									<label for="cep">CEP: </label>
+									<input name="cep" id="cep" type="text" placeholder="CEP"
+										class="form-control inputSST">
+								</div>
+								<div class="col-md-3">
+									<label for="cnpj">CNPJ</label>
+									<input name="cnpj" id="cnpj" type="text" placeholder="CNPJ"
+										class="form-control inputSST">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<label for="escopoDescricao">Descrição do Escopo da Obra: </label>
+									<input name="escopoDescricao" type="text" placeholder="Escopo da Obra"
+										class="form-control inputSST">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+									<label for="dataPrevInicio">Previsão de Início: </label>
+									<input name="dataPrevInicio" id="dataPrevInicio" type="text"
+										placeholder="Data Início" class="form-control inputSST">
+								</div>
+								<div class="col-md-3">
+									<label for="dataPrevFinal">Previsão de Término: </label>
+									<input name="dataPrevFinal" id="dataPrevFinal" type="text"
+										placeholder="Previsão Término" class="form-control inputSST">
+								</div>
+								<div class="col-md-3">
+									<label for="efetivoPrevProprio">Efetivo Previsto - Próprio</label>
+									<input name="efetivoPrevProprio" type="text" placeholder="Efetivo Proprio"
+										class="form-control inputSST">
+								</div>
+								<div class="col-md-3">
+									<label for="efetivoPrevTerceiro">Efetivo Previsto - Terceiros</label>
+									<input name="efetivoPrevTerceiro" type="text" placeholder="Efetivos Terceiros"
+										class="form-control inputSST">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+									<label for="fgtsSwitch">Financiamento Pelo FGTS</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="fgtsSwitch"
+										id="fgtsSwitch">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- T.I -->
+
+			<div id="ti">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="collapse-icon up panel-title" data-toggle="collapse" href="#tableTi">
+							T.I.
+						</h2>
+					</div>
+					<div class="collapse in" id="tableTi">
+						<div class="panel-body table-responsive">
+							<table class="table table-hover" id="equipamentosTi">
+								<thead>
+									<tr>
+										<th>Equipamentos de Informática</th>
+										<th>Quantidade</th>
+										<th>Função</th>
+										<th>Setor</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkNotebook">
+											<label>Notebooks</label>
+										</td>
+										<td><input type="text" name="quantdTi1" id="quantdTi1" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi1" id="funcaoTi1" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi1" id="setorTi1" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkDesktop">
+											<label>Desktops</label>
+										</td>
+										<td><input type="text" name="quantdTi2" id="quantdTi2" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi2" id="funcaoTi2" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi2" id="setorTi2" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkAutocad">
+											<label>Notebooks + Licença AutoCad</label>
+										</td>
+										<td><input type="text" name="quantdTi3" id="quantdTi3" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi3" id="funcaoTi3" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi3" id="setorTi3" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkMonitor">
+											<label>Monitores</label>
+										</td>
+										<td><input type="text" name="quantdTi4" id="quantdTi4" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi4" id="funcaoTi4" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi4" id="setorTi4" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkRM">
+											<label>Licenças RM</label>
+										</td>
+										<td><input type="text" name="quantdTi5" id="quantdTi5" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi5" id="funcaoTi5" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi5" id="setorTi5" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkFluig">
+											<label>Licenças FLUIG</label>
+										</td>
+										<td><input type="text" name="quantdTi6" id="quantdTi6" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi6" id="funcaoTi6" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi6" id="setorTi6" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkTeams">
+											<label>Licenças Teams</label>
+										</td>
+										<td><input type="text" name="quantdTi7" id="quantdTi7" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi7" id="funcaoTi7" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi7" id="setorTi7" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkProject">
+											<label>Licenças Project</label>
+										</td>
+										<td><input type="text" name="quantdTi8" id="quantdTi8" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi8" id="funcaoTi8" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi8" id="setorTi8" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkImpressora">
+											<label>Impressoras</label>
+										</td>
+										<td><input type="text" name="quantdTi9" id="quantdTi9" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi9" id="funcaoTi9" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi9" id="setorTi9" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkStarlink">
+											<label>Internet Via Satélite (StarLink)</label>
+										</td>
+										<td><input type="text" name="quantdTi10" id="quantdTi10" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi10" id="funcaoTi10" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi10" id="setorTi10" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkArquivo">
+											<label>Compartilhamento de Arquivos</label>
+										</td>
+										<td><input type="text" name="quantdTi11" id="quantdTi11" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi11" id="funcaoTi11" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi11" id="setorTi11" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkCelular">
+											<label>Aparelhos Celulares</label>
+										</td>
+										<td><input type="text" name="quantdTi12" id="quantdTi12" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi12" id="funcaoTi12" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi12" id="setorTi12" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkLinha">
+											<label>Linhas Telefônicas</label>
+										</td>
+										<td><input type="text" name="quantdTi13" id="quantdTi13" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi13" id="funcaoTi13" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi13" id="setorTi13" class="form-control"
+												readonly></td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" name="checkTablet">
+											<label>Tablets Ponto</label>
+										</td>
+										<td><input type="text" name="quantdTi14" id="quantdTi14" class="form-control"
+												readonly></td>
+										<td><input type="text" name="funcaoTi14" id="funcaoTi14" class="form-control"
+												readonly></td>
+										<td><input type="text" name="setorTi14" id="setorTi14" class="form-control"
+												readonly></td>
+									</tr>
+								</tbody>
+							</table>
+							<button class="btn btn-primary" id="saveButtonTi">Salvar</button>
+						</div>
+
+						<div class="pastaCria">
+							<button class="btn btn-primary" id="criaPasta">Criar pasta</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Central de Equipamentos -->
+
+			<div id="centralEquipments">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">
+							<a class="collapse-icon up" data-toggle="collapse" href="#tableCentralEquipments">
+								Central de Equipamentos
+							</a>
+						</h2>
+					</div>
+					<div id="tableCentralEquipments" class="collapse in">
+						<div class="panel-body table-responsive">
+							<table class="table table-striped" id="EquipmentTable">
+								<thead>
+									<tr>
+										<th>Máquinas e Equipamentos</th>
+										<th class="hideThProp" style="display: none;">Propriedade</th>
+										<th class="hideThProp" style="display: none;">Quantidade</th>
+										<th class="hideThTerc">Propriedade</th>
+										<th class="hideThTerc">Quantidade</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyEquipments"></tbody>
+							</table>
+							<div class="dynamicBtn">
+								<button id="saveButtonEquipamento" class="btn btn-primary">Salvar</button>
+								<button id="adicionaEquipamento" class="btn btn-primary">Novo Equipamento</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Meio Ambiente -->
+
+			<div id="meioAmbiente">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">
+							<a class="collapse-icon up" data-toggle="collapse" href="#tableMeioAmbiente">
+								Meio Ambiente
+							</a>
+						</h2>
+					</div>
+					<div id="tableMeioAmbiente" class="collapse in">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>1. A obra já está licenciada? Apresentar a Licença Ambiental.</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="meioAmbienteSwitch"
+										id="meioAmbienteSwitch">
+									<textarea name="b" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>2. A obra está munida de Licença para Supressão de Vegetação?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small"
+										name="licencaSupressaoSwitch" id="licencaSupressaoSwitch">
+									<textarea name="ba" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>3. A supressão será realizada por terceiros ou próprio? Necessário licenças das motosserras.</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="PROP." data-off-text="TERC." size="small" name="motoserraSwitch"
+										id="motoserraSwitch">
+									<textarea name="bb" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>4. Instalação de Canteiro de Obras fora da Faixa de Domínio?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="switchInstalaCanteiro"
+										id="switchInstalaCanteiro">
+									<textarea name="bc" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable hideDivCanteiro">
+									<label>4.1 Previsão de mobilização e desmobilização?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="mobDesmobSwitch"
+										id="mobDesmobSwitch">
+									<textarea name="bd" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>5. Instalação de Canteiro de Micro Revestimento Asfáltico?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="switchCanteiroMicro"
+										id="switchCanteiroMicro">
+									<textarea name="be" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable hideDivCanteiroMicro">
+									<label>5.1 Dentro ou Fora da Faixa de Domínio?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="DENTRO" data-off-text="FORA" size="small" name="inOutDomainSwitch"
+										id="inOutDomainSwitch">
+									<textarea name="bf" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTableAlternate hideDivCanteiroMicro">
+									<label>5.2 Quantos?</label>
+									<textarea name="bg" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTableAlternate hideDivCanteiroMicro">
+									<label>5.3 Prever cronograma de mobilização e desmobilização de cada um.</label>
+									<input type="hidden" name="hidden">
+									<textarea name="bh" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>6. Instalação de Oficina Mecânica?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="oficinaSwitch"
+										id="oficinaSwitch">
+									<textarea name="bi" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>7. Instalação de Tanque de Combustível?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="switchTanqueCombust"
+										id="switchTanqueCombust">
+									<textarea name="bj" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable hideDivCombust">
+									<label>7.1 Uma unidade de 15m³ ou 15.000 litros ?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="15m³" data-off-text="15.000L" size="small"
+										name="unidadeTanqueSwitch" id="unidadeTanqueSwitch">
+									<textarea name="bk" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>8. Instalação de uma Usina para Produção de Asfalto?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="usinaAsfaltoSwitch"
+										id="usinaAsfaltoSwitch">
+									<textarea name="bl" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>9. Instalação de uma Usina para Produção de Concreto? Ou Central Dosadora de Agregados (apenas dosa as quantidades dos agregados para o caminhão betoneira)?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="usinaConcretoSwitch"
+										id="usinaConcretoSwitch">
+									<textarea name="bm" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>10. Necessidade de Bota-Fora de Solo fora da Faixa de Domínio?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="botaforaSoloSwitch"
+										id="botaforaSoloSwitch">
+									<textarea name="bn" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>11. Necessidade de Caixa de Empréstimo de Solo fora da Faixa de Domínio?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="caixaEmprestimoSwitch"
+										id="caixaEmprestimoSwitch">
+									<textarea name="bo" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>12. Bota-Espera de Fresa, dentro da Faixa de Domínio ou dentro do Canteiro de Obras e/ou Micro?</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="botaForaFresaSwitch"
+										id="botaForaFresaSwitch">
+									<textarea name="bp" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>13. Haverá Captação de Água Superficial? Prever pontos para Outorgar.</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="captaAguaSwitch"
+										id="captaAguaSwitch">
+									<textarea name="bq" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTable">
+									<label>14. Monitoramento de Fumaça Preta, informar/listar equipamentos movidos a Diesel alocados na obra.</label>
+									<input type="checkbox" data-on-color="success" data-off-color="danger"
+										data-on-text="SIM" data-off-text="NÃO" size="small" name="fumacaSwitch"
+										id="fumacaSwitch">
+									<textarea name="br" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTableAlternate">
+									<label>15. Informar/listar fornecedores para homologação das Licenças Ambientais e emissão de MTRs (Banheiro Químico por exemplo).</label>
+									<input type="hidden" name="hidden1">
+									<textarea name="bs" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 itemsTableAlternate">
+									<label>16. Listagem e tratativas das responsabilidades dos Programas Ambientais conforme Contrato/Processo Licitatório.</label>
+									<input type="hidden" name="hidden2">
+									<textarea name="bt" cols="30" rows="1"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="pdfArea">
+				<button class="btn btn-primary btn-lg" name="geraPdf" id="geraPdf">
+					<i class="fluigicon fluigicon-file-doc icon-xs" aria-hidden="true"></i>
+					Gerar PDF
+				</button>
+
+			</div>
+
+			<div id="enginnerBtn">
+				<button id="botaoSalvar" type="button" class="btn btn-primary btn-lg">Salvar Informações</button>
+			</div>
+
+			<input type="hidden" name="atividade" id="atividade" />
+			<input type="hidden" name="modoAtividade" id="modoAtividade" />
+			<input type="hidden" name="usuario" id="usuario" />
+			<input type="hidden" name="idPastaObra" id="idPastaObra">
+			<input type="hidden" name="idDocReuniaoZero" id="idDocReuniaoZero">
+			<input type="hidden" name="valorSpan" id="valorSpan">
+			<input type="hidden" name="coligadaSpan" id="coligadaSpan">
+			<input type="hidden" name="valorGerente" id="valorGerente">
+			<input type="hidden" name="suprimentosData" id="suprimentosData">
+			<input type="hidden" name="tiData" id="tiData">
+
+			<input type="hidden" name="jsonTableBetuminoso" id="jsonTableBetuminoso">
+			<input type="hidden" name="jsonTableAco" id="jsonTableAco">
+			<input type="hidden" name="jsonTableDiesel" id="jsonTableDiesel">
+			<input type="hidden" name="jsonTableAgregado" id="jsonTableAgregado">
+			<input type="hidden" name="jsonTableEpi" id="jsonTableEpi">
+			<input type="hidden" name="jsonTableEpc" id="jsonTableEpc">
+			<input type="hidden" name="jsonTableLaboratorio" id="jsonTableLaboratorio">
+			
+			<input type="hidden" name="jsonTableVeiculo" id="jsonTableVeiculo">
+			<input type="hidden" name="jsonTableContabil" id="jsonTableContabil">
+			<input type="hidden" name="jsonTableEquipamento" id="jsonTableEquipamento">
+			<input type="hidden" name="status" id="status" value="0">
+
+			<script>
+				function beforeSendValidate(numState, nextState) {
+					var resultado = validaCampos();
+					return resultado;
+				}				
+			</script>
+		</form>
+	</div>
+</body>
+
+</html>

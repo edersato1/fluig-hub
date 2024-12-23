@@ -1,0 +1,38 @@
+/* Globais */
+
+h2 {
+    padding-bottom: 1.5em;
+}
+
+.fluig-style-guide .row:nth-child(1n+2) {
+    margin-top: 1em;
+}
+
+/* inputs */
+
+#motivoAlteracao {
+    margin-bottom: 2rem;
+}
+
+.attachments > div {
+    margin: 0.5rem 0 1rem 0;
+}
+
+.aprovationArea {
+    display: flex;
+    justify-content: space-around;
+}
+
+#initForm {
+    display: flex;
+    align-items: center;
+}
+
+#textoSelects {
+    letter-spacing: -0.5px;
+}
+
+#pdfArea {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,303 @@
+<html>
+
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css" />
+	<link rel="stylesheet" href="StylesAlteracaoSalario.css">
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="ScriptAlteracaoSalario.js"></script>
+	<script type="text/javascript" src="FunctionsAlteracaoSalario.js"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+	<script src="jquery.mask.min.js"></script>
+	<script src="jsPDF.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.2.7/dist/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<h2>Alterações Salariais</h2>
+
+			<div id="initForm">
+				<div class="col-md-6">
+					<label for="motivoAlteracao">Motivo da Alteração</label>
+					<select name="motivoAlteracao" id="motivoAlteracao" class="form-control col-md-8"
+						placeholder="Motivo">
+						<option value="" selected></option>
+						<option value="mudancaFuncao">Mudança de Função</option>
+						<option value="antecipacao">Antecipação</option>
+						<option value="enquadramento">Enquadramento</option>
+						<option value="merito">Mérito (Aumento Espontâneo)</option>
+						<option value="promocao">Promoção</option>
+					</select>
+				</div>
+				<div class="col-md-6">
+					<h5 id="textoSelects"></h5>
+				</div>
+			</div>
+
+			<div id="divAlertMessage">
+				<div class="alert alert-warning">
+					<h5>Data limite de envio desta solicitação de alteração salarial e/ou mudança de função: Até o dia
+						15(Quinze) de cada mês.</h5>
+				</div>
+			</div>
+
+			<div id="divFuncIdentity">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Identificação do Colaborador</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="obra">Obra</label>
+								<select name="obra" id="obra" class="form-control">
+									<option value="option"></option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<label for="numChapa">Chapa nº</label>
+								<input type="text" id="numChapa" name="numChapa" onblur="selecionaChapa()"
+									class="form-control" placeholder="Nº Chapa" autocomplete="off">
+							</div>
+							<div class="col-md-6">
+								<label for="nomeFunc">Nome do Funcionário</label>
+								<input type="text" id="nomeFunc" name="nomeFunc" class="form-control"
+									placeholder="Funcionário">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="divFuncAtual">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Situação Atual</h3>
+					</div>
+					<div class="panel-body">
+						<div class="col-md-5">
+							<label for="atualFunc">Função</label>
+							<input type="text" class="form-control" name="atualFunc" id="atualFunc"
+								placeholder="Função">
+						</div>
+						<div class="col-md-5">
+							<label for="obraOrigem">Obra/Setor</label>
+							<input type="text" class="form-control" name="obraOrigem" id="obraOrigem"
+								placeholder="Obra">
+						</div>
+						<div class="col-md-2">
+							<label for="atualSalario">Salário</label>
+							<input type="text" class="form-control" name="atualSalario" id="atualSalario"
+								placeholder="Salário">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="divNovaFunc">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Situação Proposta</h3>
+					</div>
+					<div class="panel-body">
+						<div class="col-md-5">
+							<label for="novaFunc">Função</label>
+							<select name="novaFunc" id="novaFunc" class="form-control">
+								<option value="option"></option>
+							</select>
+						</div>
+						<div class="col-md-5">
+							<label for="obraDestino">Obra</label>
+							<select name="obraDestino" id="obraDestino" class="form-control" aria-placeholder="Obra">
+								<option value="option"></option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<label for="novoSalario">Novo Salário</label>
+							<input type="text" class="form-control" name="novoSalario" id="novoSalario"
+								placeholder="Salário">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="divAnexos">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Anexos obrigatórios</h3>
+					</div>
+					<div class="panel-body attachments">
+						<div class="col-md-4">
+							<label for="inputFileAtestadoSaude" class="popoverAtestadoSaude" data-toggle="popover"
+								data-content="<div><p>Liberado pelo médico após realização dos exames solicitados, para mudança de função conforme determinado na <b>Norma de Segurança 22/2014</b>.</p></div>">
+								A.S.O - Atestado de Saúde Ocupacional
+								<i class="flaticon flaticon-info icon-sm" aria-hidden="true"></i>
+							</label>
+							<div style="display: flex; align-items: baseline">
+								<input type="file" class="form-control" style="display: none;"
+									name="inputFileAtestadoSaude" id="inputFileAtestadoSaude">
+								<button class="btn btn-primary" onclick="$('#inputFileAtestadoSaude').click();">Escolher
+									Arquivo</button>
+								<div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Nenhum
+									arquivo selecionado</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<label for="inputFileFichaEPI" class="popoverFichaEPI">
+								Ficha de Entrega de EPI
+							</label>
+							<div style="display: flex; align-items: baseline">
+								<input type="file" class="form-control" style="display: none;" name="inputFileFichaEPI"
+									id="inputFileFichaEPI">
+								<button class="btn btn-primary" onclick="$('#inputFileFichaEPI').click();">Escolher
+									Arquivo</button>
+								<div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Nenhum
+									arquivo selecionado</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<label for="inputFileOSNovaFunc" class="popoverNovaFunc">
+								Ordem de Serviço de Nova Função
+							</label>
+							<div style="display: flex; align-items: baseline">
+								<input type="file" class="form-control" style="display: none;"
+									name="inputFileOSNovaFunc" id="inputFileOSNovaFunc">
+								<button class="btn btn-primary" onclick="$('#inputFileOSNovaFunc').click();">Escolher
+									Arquivo</button>
+								<div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Nenhum
+									arquivo selecionado</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<label for="inputFileTreinoNovaFunc" class="popoverCertificadoTreinamento">
+								Certificado de Treinamento de Nova Função
+							</label>
+							<div style="display: flex; align-items: baseline">
+								<input type="file" class="form-control" style="display: none;"
+									name="inputFileTreinoNovaFunc" id="inputFileTreinoNovaFunc">
+								<button class="btn btn-primary"
+									onclick="$('#inputFileTreinoNovaFunc').click();">Escolher Arquivo</button>
+								<div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Nenhum
+									arquivo selecionado</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<label for="inputFileTermoTreino" class="popoverTermoTreinamento">
+								Termo de Treinamento
+							</label>
+							<div style="display: flex; align-items: baseline">
+								<input type="file" class="form-control" style="display: none;"
+									name="inputFileTermoTreino" id="inputFileTermoTreino">
+								<button class="btn btn-primary" onclick="$('#inputFileTermoTreino').click();">Escolher
+									Arquivo</button>
+								<div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Nenhum
+									arquivo selecionado</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<label for="inputFileAvaliaEficacia" class="popoverAvaliaEficacia">
+								Avaliação de Eficácia
+							</label>
+							<div style="display: flex; align-items: baseline">
+								<input type="file" class="form-control" style="display: none;"
+									name="inputFileAvaliaEficacia" id="inputFileAvaliaEficacia">
+								<button class="btn btn-primary"
+									onclick="$('#inputFileAvaliaEficacia').click();">Escolher Arquivo</button>
+								<div style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">Nenhum
+									arquivo selecionado</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="aprovaGerente">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Aprovação do Gerente</h3>
+					</div>
+					<div class="panel-body aprovationArea">
+						<div class="col-md-2">
+							<div class="custom-checkbox custom-checkbox-success">
+								<input type="checkbox" name="checkAprovaGerente" id="checkAprovaGerente">
+								<label for="checkAprovaGerente">Aprovado</label>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="custom-checkbox custom-checkbox-danger">
+								<input type="checkbox" name="checkRejeitaGerente" id="checkRejeitaGerente">
+								<label for="checkRejeitaGerente">Reprovado</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="aprovaSeguranca">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Aprovação SMS</h3>
+					</div>
+					<div class="panel-body aprovationArea">
+						<div class="col-md-2">
+							<div class="custom-checkbox custom-checkbox-success">
+								<input type="checkbox" name="checkAprovaSeguranca" id="checkAprovaSeguranca">
+								<label for="checkAprovaSeguranca">Aprovado</label>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="custom-checkbox custom-checkbox-danger">
+								<input type="checkbox" name="checkRejeitaSeguranca" id="checkRejeitaSeguranca">
+								<label for="checkRejeitaSeguranca">Reprovado</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="motivoRejeitado">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Motivo</h3>
+					</div>
+					<div class="panel-body">
+						<textarea name="motivo" id="motivo" cols="150" rows="2" placeholder="Motivo da rejeição"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div id="pdfArea">
+				<button class="btn btn-primary btn-lg" name="geraPdf" id="geraPdf">
+					<i class="fluigicon fluigicon-file-doc icon-xs" aria-hidden="true"></i>
+					Gerar PDF
+				</button>
+			</div>
+
+			<input type="hidden" id="idDocAtestadoSaude" name="idDocAtestadoSaude">
+			<input type="hidden" id="idDocFichaEPI" name="idDocFichaEPI">
+			<input type="hidden" id="idDocOSNovaFunc" name="idDocOSNovaFunc">
+			<input type="hidden" id="idDocTreinoNovaFunc" name="idDocTreinoNovaFunc">
+			<input type="hidden" id="idDocTermoTreino" name="idDocTermoTreino">
+			<input type="hidden" id="idDocAvaliaEficacia" name="idDocAvaliaEficacia">
+			<input type="hidden" id="idDocRelatorio" name="idDocRelatorio">
+
+			<input type="hidden" id="solicitante" name="solicitante">
+			<input type="hidden" id="modoAtividade" name="modoAtividade">
+			<input type="hidden" id="atividade" name="atividade">
+			<input type="hidden" id="status" name="status" value="0">
+
+			<script>
+				function beforeSendValidate(numState, nextState) {
+					var resultado = ValidaCampos();
+					return resultado;
+				}				
+			</script>
+		</form>
+	</div>
+</body>
+
+</html>

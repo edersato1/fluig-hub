@@ -1,0 +1,67 @@
+.fluig-style-guide .row {
+    margin-bottom: 15px;
+}
+
+.itemsTable {
+    display: grid;
+    grid-template-columns: 3fr 1fr 2fr;
+    align-items: baseline;
+    margin: 1.5em 0;
+}
+.itemsTableAlternate {
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+    align-items: baseline;
+    margin: 1.5em 0;
+}
+
+#pdfArea {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#geraPdf, #botaoSalvar {
+    transition: 0.5s ease-out;
+}
+
+#geraPdf:hover, #botaoSalvar:hover {
+    background-color: #212212;
+    border-color: #212212;
+    transition: 0.5s ease-in;
+}
+
+.pastaCria {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+.regionalNome {
+    padding: 6px 0px 8px 12px;
+    border: 1px solid #d4d1d3;
+    border-radius: 4px;
+    display: block;
+}
+
+.dynamicBtn {
+    display: flex;
+    justify-content: space-between;
+}
+
+#enginnerBtn {
+    display: flex;
+    justify-content: center;
+}
+
+/* Validadores */
+
+.has-error{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    display: inline-block;
+    border: 1px red solid !important;
+    color: black !important;
+}

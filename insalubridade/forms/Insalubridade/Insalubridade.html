@@ -1,0 +1,430 @@
+<html>
+
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css" />
+	<link rel="stylesheet" href="Insalubridade.css">
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="ScriptInsalubridade.js"></script>
+	<script type="text/javascript" src="FunctionInsalubridade.js"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+	<script src="jquery.mask.min.js"></script>
+	<script src="jsPDF.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.2.7/dist/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<div>
+				<h2>Insalubridade/Periculosidade</h2>
+
+				<!-- Informações iniciais -->
+
+				<div id="divAlertMessage">
+					<div class="alert alert-warning">
+						<h5>Data limite de envio desta solicitação de insalubridade ou periculosidade: Até o dia
+							15(Quinze) de cada mês.</h5>
+					</div>
+				</div>
+
+				<div id="divFuncIdentity">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Informações do Colaborador</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3">
+									<label for="dataSolicitacao">Data de Solicitação</label>
+									<input type="text" name="dataSolicitacao" id="dataSolicitacao" class="form-control inputInicial" placeholder="Data de Solicitação" autocomplete="off">
+								</div>
+								<div class="col-md-6">
+									<label for="obra">Obra Origem</label>
+									<select name="obra" id="obra" class="form-control">
+										<option value="option"></option>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<label for="numChapa">Chapa N°</label>
+									<input type="text" name="numChapa" id="numChapa" onblur="selecionaChapa()"
+										placeholder="N° Chapa" class="form-control inputInicial" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<label for="nomeFunc">Nome do Funcionário</label>
+									<input type="text" name="nomeFunc" id="nomeFunc" class="form-control" readonly>
+								</div>
+								<div class="col-md-6">
+									<label for="atualFunc">Função Atual</label>
+									<input type="text" name="atualFunc" id="atualFunc" class="form-control" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="divSectorArea">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<a class="collapse-icon up" data-toggle="collapse" href="#descricaoCargo"
+									aria-expanded="false">
+									Descritivo do Setor de Trabalho
+								</a>
+							</h3>
+						</div>
+						<div id="descricaoCargo" class="collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6">
+										<label for="setor">Setor</label>
+										<input type="text" name="setor" id="setor" class="form-control" minlength="5" readonly>
+									</div>
+									<div class="col-md-6">
+										<label for="setorEspecifico">Função Desempenhada</label>
+										<input type="text" name="setorEspecifico" id="setorEspecifico"
+											class="form-control inputInicial" placeholder="Função Desempenhada" autocomplete="off">
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-12">
+										<label for="descricao">Descrição das Atividades</label>
+										<textarea name="descricao" id="descricao" rows="4" class="form-control"
+											readonly></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="divAnexos">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<a class="collapse-icon up" data-toggle="collapse" href="#anexosArea"
+									aria-expanded="true">
+									Checagem de NR's de Periculosidade/Insalubridade
+								</a>
+							</h3>
+						</div>
+						<div id="anexosArea" class="collapse in">
+							<div class="panel-body">
+								<div class="row">
+									<h4>ATIVIDADES COM CARÁTER DE PERICULOSIDADE CONFORME LEGISLAÇÃO VIGENTE</h4>
+
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="perigoAnexo1">Atividades e Operações Perigosas Anexo 1 - Explosivos</label>
+											<input type="checkbox" name="perigoAnexo1" id="perigoAnexo1"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="perigoAnexo2">Atividades e Operações Perigosas Anexo 2 - Inflamáveis</label>
+											<input type="checkbox" name="perigoAnexo2" id="perigoAnexo2"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="perigoAnexo3">Atividades e Operações Perigosas Anexo 3 - Profissionais de Segurança Pessoal ou Patrimonial</label>
+											<input type="checkbox" name="perigoAnexo3" id="perigoAnexo3"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="perigoAnexo4">Atividades e Operações Perigosas Anexo 4 - Energia Elétrica</label>
+											<input type="checkbox" name="perigoAnexo4" id="perigoAnexo4"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="perigoAnexo5">Atividades e Operações Perigosas Anexo (*) - Radiação Ionizantes ou Substâncias Radioativas</label>
+											<input type="checkbox" name="perigoAnexo5" id="perigoAnexo5"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+
+								</div>
+								<hr>
+								<div class="row">
+									<h4>ATIVIDADES COM CARÁTER DE INSALUBRIDADE CONFORME LEGISLAÇÃO VIGENTE</h4>
+
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo1">Atividades e Operações Insalubres Anexo 1 - Ruído Contínuo ou Intermitente</label>
+											<input type="checkbox" name="insalubreAnexo1" id="insalubreAnexo1"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo2">Atividades e Operações Insalubres Anexo 2 - Ruído de Impacto</label>
+											<input type="checkbox" name="insalubreAnexo2" id="insalubreAnexo2"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo3">Atividades e Operações Insalubres Anexo 3 - Calor</label>
+											<input type="checkbox" name="insalubreAnexo3" id="insalubreAnexo3"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo4">Atividades e Operações Insalubres Anexo 5 - Radiações Ionizadas</label>
+											<input type="checkbox" name="insalubreAnexo4" id="insalubreAnexo4"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<!-- (carece de consulta, pdf com falha na view) -->
+											<label for="insalubreAnexo5">Atividades e Operações Insalubres Anexo 6 - Condições Hiperbáricas</label>
+											<input type="checkbox" name="insalubreAnexo5" id="insalubreAnexo5"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo6">Atividades e Operações Insalubres Anexo 7 - Radiações Não Ionizantes</label>
+											<input type="checkbox" name="insalubreAnexo6" id="insalubreAnexo6"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo8">Atividades e Operações Insalubres Anexo 8 - Vibração</label>
+											<input type="checkbox" name="insalubreAnexo8" id="insalubreAnexo8"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo9">Atividades e Operações Insalubres Anexo 9 - Frio</label>
+											<input type="checkbox" name="insalubreAnexo9" id="insalubreAnexo9"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo10">Atividades e Operações Insalubres Anexo 10 - Umidade</label>
+											<input type="checkbox" name="insalubreAnexo10" id="insalubreAnexo10"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo11">Atividades e Operações Insalubres Anexo 11 - Agentes Químicos (Quantitativo)</label>
+											<input type="checkbox" name="insalubreAnexo11" id="insalubreAnexo11"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo12">Atividades e Operações Insalubres Anexo 12 - Poeiras Minerais</label>
+											<input type="checkbox" name="insalubreAnexo12" id="insalubreAnexo12"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo13">Atividades e Operações Insalubres Anexo 13 - Agentes Químicos (Qualitativo)</label>
+											<input type="checkbox" name="insalubreAnexo13" id="insalubreAnexo13"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo14">Atividades e Operações Insalubres Anexo 13 A - Benzeno (Qualitativo)</label>
+											<input type="checkbox" name="insalubreAnexo14" id="insalubreAnexo14"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+									<div class="row">
+										<div class="anexoLinha">
+											<label for="insalubreAnexo15">Atividades e Operações Insalubres Anexo 14 - Agentes Biológicos</label>
+											<input type="checkbox" name="insalubreAnexo15" id="insalubreAnexo15"
+												data-on-color="success" data-off-color="danger" data-on-text="SIM"
+												data-off-text="NÃO" size="mini">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="divNr">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Porcentagem de Cálculo da(s) Norma(s) Regulamentar(es)</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4">
+									<input type="text" id="percentNr" name="percentNr" class="form-control" placeholder="Porcentagem Total">
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+
+				<div id="divObservacoes">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Observações</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<textarea name="observacoes" id="observacoes" rows="2"
+										class="form-control" placeholder="Caso necessário, inclua detalhes sobre casos especiais"></textarea>
+								</div>
+							</div>
+							<div class="row attachObs">
+								<div class="col-md-4">
+									<label for="anexoObserv">Incluir Documento Probatório</label>
+									<input type="checkbox" name="anexoObserv" id="anexoObserv"
+									data-on-color="success" data-off-color="danger" data-on-text="SIM"
+									data-off-text="NÃO" size="mini">
+								</div>
+
+								<div class="col-md-8 divAnexo" id="divAnexoConditionSpecial">
+									<label for="inputFileConditionSpecial">
+										Anexo:
+										<br />
+										<div style="display: flex; align-items: baseline">
+											<input type="file" name="inputFileConditionSpecial"
+												id="inputFileConditionSpecial" class="form-control"
+												style="display: none"/>
+											<button class="btn btn-primary"
+												onclick="$('#inputFileConditionSpecial').click();"
+												style="margin-right: 5px">
+												Escolher arquivo
+											</button>
+											<div
+												style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
+												Nenhum arquivo selecionado</div>
+										</div>
+									</label>
+									<br />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="approveAreaGerente">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Aprovação - Gerente de Contrato</h3>
+						</div>
+						<div class="panel-body aprovationArea">
+							<div class="col-md-2">
+								<div class="custom-checkbox custom-checkbox-success">
+									<input type="checkbox" name="checkAprova" id="checkAprova">
+									<label for="checkAprova">Aprovado</label>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="custom-checkbox custom-checkbox-danger">
+									<input type="checkbox" name="checkRejeita" id="checkRejeita">
+									<label for="checkRejeita">Reprovado</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="approveAreaSeguranca">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Aprovação - Segurança</h3>
+						</div>
+						<div class="panel-body aprovationArea">
+							<div class="col-md-2">
+								<div class="custom-checkbox custom-checkbox-success">
+									<input type="checkbox" name="checkAprovaSeguranca" id="checkAprovaSeguranca">
+									<label for="checkAprovaSeguranca">Aprovado</label>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="custom-checkbox custom-checkbox-danger">
+									<input type="checkbox" name="checkRejeitaSeguranca" id="checkRejeitaSeguranca">
+									<label for="checkRejeitaSeguranca">Reprovado</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="motivoRejeitado">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Motivo</h3>
+						</div>
+						<div class="panel-body">
+							<textarea name="motivo" id="motivo" cols="150" class="form-control" rows="2"
+								placeholder="Motivo da rejeição"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div id="pdfArea">
+					<button class="btn btn-primary btn-lg" name="geraPdf" id="geraPdf">
+						<i class="fluigicon fluigicon-file-doc icon-xs" aria-hidden="true"></i>
+						Gerar PDF
+					</button>
+				</div>
+
+				<input type="hidden" id="solicitante" name="solicitante">
+				<input type="hidden" id="modoAtividade" name="modoAtividade">
+				<input type="hidden" id="atividade" name="atividade">
+				<input type="hidden" id="status" name="status" value="0">
+				<input type="hidden" id="idDocRelatorio" name="idDocRelatorio">
+
+				<script>
+					function beforeSendValidate(numState, nextState) {
+						var resultado = validaCampos();
+						return resultado;
+					}				
+				</script>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

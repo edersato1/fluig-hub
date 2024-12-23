@@ -1,0 +1,46 @@
+/* Globais */
+
+.fluig-style-guide .row:nth-child(1n+2) {
+    margin-top: 1em;
+}
+
+/* Gerais */
+
+#infObra {
+    margin-top: 25px;
+    background: transparent;
+    border: none;
+    color: black;
+}
+
+.decParc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aprovationArea {
+    display: flex;
+    justify-content: space-around;
+}
+
+.motivoAlteracao {
+    color: firebrick !important;
+    letter-spacing: -0.5px;
+    transition: 0.5s ease-in;
+    
+}
+
+.motivoAlteracao:hover {
+    text-decoration: underline;
+    transition: 0.5s ease-out;
+}
+
+#motivo::placeholder {
+    color: #b9b9b9;
+}
+
+#pdfArea {
+    display: flex;
+    justify-content: center;
+}

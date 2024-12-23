@@ -1,0 +1,155 @@
+<html>
+
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css" />
+	<link type="text/css" rel="stylesheet" href="StyleFerias.css">
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="ScriptFerias.js"></script>
+	<script type="text/javascript" src="FunctionFerias.js"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="jquery.mask.min.js"></script>
+	<script src="jsPDF.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.2.7/dist/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<div>
+				<h2>Férias</h2>
+
+				<div id="divFuncIdentity">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Informações do Colaborador</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-6"><label for="obra">Obra</label>
+									<select name="obra" id="obra" class="form-control">
+										<option value="option"></option>
+									</select>
+								</div>
+								<div class="col-md-2">
+									<label for="numChapa">Chapa</label>
+									<input type="text" name="numChapa" onblur="selecionaChapa()" id="numChapa"
+										class="form-control" autocomplete="off">
+								</div>
+								<div class="col-md-4">
+									<label for="coligadaInfo" style="display: none;">Coligada</label>
+									<input type="text" id="infObra" name="coligadaInfo" class="form-control" readonly>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<label for="nomeFunc">Nome do Funcionário</label>
+									<input type="text" name="nomeFunc" id="nomeFunc" class="form-control" readonly>
+								</div>
+								<div class="col-md-6">
+									<label for="atualFunc">Função Atual</label>
+									<input type="text" name="atualFunc" id="atualFunc" class="form-control" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="alertMessage"></div>
+
+				<div id="vacationPeriod">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Período de Férias</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-2">
+									<label for="dataInicio" class="popoverFerias" data-toggle="popover"
+										data-content="<div><p>Conforme o <b>art. 143 da CLT</b>, o trabalhador pode tirar 30 dias de férias consecutivos ou optar por 20 dias de descanso e 10 de abono pecuniário.</p></div>">
+										Data de Início
+										<i class="flaticon flaticon-info icon-sm" aria-hidden="true"></i>
+									</label>
+									<input type="text" name="dataInicio" id="dataInicio" class="form-control">
+								</div>
+								<div class="col-md-2">
+									<label for="qtdDias">Quantidade de Dias</label>
+									<input type="text" name="qtdDias" id="qtdDias" class="form-control">
+								</div>
+								<div class="col-md-2">
+									<label for="dataFinal">Data de Término</label>
+									<input type="text" name="dataFinal" id="dataFinal" class="form-control" readonly>
+								</div>
+								<div class="col-md-3 decParc">
+									<label for="decimoParcela">Antecipação de 13º Salário?</label>
+									<input id="decimoParcela" name="decimoParcela" type="checkbox" class="form-control"
+										data-on-text="SIM" data-on-color="success" data-off-text="NÃO"
+										data-off-color="danger">
+								</div>
+								<div class="col-md-3 decParc">
+									<label for="abonoPecuniario">Possui Abono Pecuniário?</label>
+									<input id="abonoPecuniario" name="abonoPecuniario" type="checkbox" class="form-control"
+										data-on-text="SIM" data-on-color="success" data-off-text="NÃO"
+										data-off-color="danger">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="approveArea">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Aprovação</h3>
+						</div>
+						<div class="panel-body aprovationArea">
+							<div class="col-md-2">
+								<div class="custom-checkbox custom-checkbox-success">
+									<input type="checkbox" name="checkAprova" id="checkAprova">
+									<label for="checkAprova">Aprovado</label>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="custom-checkbox custom-checkbox-danger">
+									<input type="checkbox" name="checkRejeita" id="checkRejeita">
+									<label for="checkRejeita">Reprovado</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="motivoRejeitado">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Motivo</h3>
+						</div>
+						<div class="panel-body">
+							<textarea name="motivo" id="motivo" cols="150" rows="2"
+								placeholder="Motivo da rejeição"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div id="pdfArea">
+					<button class="btn btn-primary btn-lg" name="geraPdf" id="geraPdf">
+						<i class="fluigicon fluigicon-file-doc icon-xs" aria-hidden="true"></i>
+						Gerar PDF
+					</button>
+				</div>
+
+				<input type="hidden" id="solicitante" name="solicitante">
+				<input type="hidden" id="modoAtividade" name="modoAtividade">
+				<input type="hidden" id="atividade" name="atividade">
+				<input type="hidden" id="status" name="status" value="0">
+				<input type="hidden" id="idDocRelatorio" name="idDocRelatorio">
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>
